@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theVoiceAround.music.mapper.DownloadHistoryMapper">
+    <select id="getHistoryByUserId" resultType="Map" parameterType="String">
+        SELECT
+        song.NAME songName,
+        singer.NAME singerName,
+        song.album songAlbum,
+        song.pic songPic,
+        song.url songUrl,
+        song.id songId,
+        song.lyric songLyric,
+        song.style songStyle,
+        download_history.download_time
+        FROM
+        download_history
+        LEFT JOIN song ON download_history.song_id = song.id
+        LEFT JOIN singer ON song.singer_id = singer.id
+        WHERE
+        download_history.user_id = ${userId}
+        ORDER BY
+        download_history.download_time DESC
+    </select>
+
+
+    <select id="selectHear" resultType="Integer" parameterType="Integer">
+        SELECT
+        song_id
+        FROM
+        play_history
+        WHERE
+        user_id = ${userId}
+    </select>
+
+
+
+
+</mapper>

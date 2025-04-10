@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theVoiceAround.music.mapper.CollectMapper">
+    <select id="selectCollect" resultType="com.theVoiceAround.music.entity.Score">
+        SELECT
+	      M.user_id AS consumerId,
+	      M.song_list_id AS songListId,
+	      COUNT( M.song_list_id ) AS score
+        FROM
+	      (
+	    SELECT
+		  X.user_id,
+		  Y.song_list_id
+	    FROM
+		  ( SELECT B.user_id, B.song_id FROM consumer A, collect B WHERE A.id = B.user_id ) AS X
+		JOIN list_song Y ON X.song_id = Y.song_id
+	      ) AS M
+        GROUP BY
+	      M.song_list_id
+    </select>
+
+
+</mapper>

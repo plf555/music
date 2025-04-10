@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theVoiceAround.music.mapper.CommentMapper">
+    <select id="getCommentBySongListId" resultType="Map" parameterType="Integer">
+        SELECT
+        COMMENT.id commentId,
+        COMMENT.consumer_id consumerId,
+        COMMENT.type type,
+        COMMENT.song_id songId,
+        COMMENT.song_list_id songListId,
+        COMMENT.content,
+        COMMENT.create_time createTime,
+        COMMENT.up,
+        consumer.username,
+        consumer.avatar
+        FROM
+        COMMENT LEFT JOIN consumer ON COMMENT.consumer_id = consumer.id
+        LEFT JOIN song_list ON COMMENT.song_list_id = song_list.id
+        WHERE
+        1 = 1
+        <if test="songListId != null and songListId != '' ">
+            AND song_list.id = ${songListId}
+        </if>
+    </select>
+
+    <!--<select id="getLikeRecords" resultType="com.theVoiceAround.music.entity.LikeRecords" parameterType="Integer">-->
+        <!--SELECT-->
+        <!--id, consumer_id consumerId, comment_id commentId-->
+        <!--FROM-->
+        <!--like_records-->
+        <!--WHERE-->
+        <!--1 = 1-->
+        <!--<if test="userId != null and commentId != null ">-->
+            <!--AND comment_id = ${commentId} AND consumer_id = ${userId}-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <select id="selectComment" resultType="com.theVoiceAround.music.entity.Score" parameterType="Integer">
+      SELECT
+        M.consumer_id AS consumerId,
+        M.song_list_id AS songListId,
+        COUNT( M.song_list_id ) AS score
+      FROM
+        (
+        SELECT
+            X.consumer_id,
+            Y.song_list_id
+        FROM
+            ( SELECT B.consumer_id, B.song_id FROM consumer A, comment B WHERE A.id = B.consumer_id AND B.song_id IS NOT NULL) AS X
+            JOIN list_song Y ON X.song_id = Y.song_id
+        ) AS M
+      GROUP BY
+        M.song_list_id
+    </select>
+
+</mapper>

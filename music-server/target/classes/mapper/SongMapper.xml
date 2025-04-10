@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theVoiceAround.music.mapper.SongMapper">
+    <select id="getAllSongByKeywords" resultType="Map" parameterType="String">
+        SELECT
+            singer.name singerName,
+            singer.id singerId,
+            song.name songName,
+            song.album songAlbum,
+            song.id songId,
+            song.url songUrl,
+            song.pic songPic,
+            song.lyric songLyric
+        FROM
+            song
+                LEFT JOIN
+            singer ON song.singer_id = singer.id
+        WHERE 1=1
+        <if test="keywords != null and keywords != '' ">
+            AND song.name LIKE CONCAT('%',#{keywords},'%') or singer.name LIKE CONCAT('%',#{keywords},'%')
+        </if>
+    </select>
+
+    <select id="getSingerNameBySongId" resultType="String" parameterType="Integer">
+        SELECT
+        singer.name singerName,
+        singer.id singerId,
+        song.id songId
+        FROM
+        song
+        LEFT JOIN
+        singer ON song.singer_id = singer.id
+        WHERE 1=1
+        <if test="songId != null and songId != '' ">
+            AND song.id = ${songId}
+        </if>
+    </select>
+
+
+
+    <select id="selectAllSongBySingerIdAlias" resultType="Map" parameterType="Integer">
+        SELECT
+        singer.name singerName,
+        singer.id singerId,
+        song.name songName,
+        song.album songAlbum,
+        song.id songId,
+        song.url songUrl,
+        song.pic songPic,
+        song.lyric songLyric
+        FROM
+        song
+        LEFT JOIN
+        singer ON song.singer_id = singer.id
+        WHERE 1=1
+        <if test="singerId != null and singerId != '' ">
+            AND singer_id = ${singerId}
+        </if>
+    </select>
+
+    <select id="getASongBySongIdAlias" resultType="Map" parameterType="Integer">
+        SELECT
+        singer.name singerName,
+        singer.id singerId,
+        song.name songName,
+        song.album songAlbum,
+        song.id songId,
+        song.url songUrl,
+        song.pic songPic,
+        song.lyric songLyric,
+        song.play_count songPlayCount
+        FROM
+        song
+        LEFT JOIN
+        singer ON song.singer_id = singer.id
+        WHERE 1=1
+        <if test="id != null and id != '' ">
+            AND song.id = ${id}
+        </if>
+    </select>
+
+
+    <select id="getASongBySongId" resultType="com.theVoiceAround.music.entity.Song" parameterType="Integer">
+        SELECT
+        song.name songName,
+        song.album songAlbum,
+        song.id songId,
+        song.url songUrl,
+        song.pic songPic,
+        song.lyric songLyric,
+        song.play_count songPlayCount
+        FROM
+        song
+        WHERE 1=1
+        <if test="songId != null and songId != '' ">
+            AND song.id = ${songId}
+        </if>
+    </select>
+
+
+    <select id="getRankList" resultType="Map" parameterType="String">
+        SELECT
+        singer.name singerName,
+        singer.id singerId,
+        song.name songName,
+        song.album songAlbum,
+        song.id songId,
+        song.url songUrl,
+        song.pic songPic,
+        song.lyric songLyric,
+        song.play_count songPlayCount
+        FROM
+        song
+        LEFT JOIN
+        singer ON song.singer_id = singer.id
+        ORDER BY song.play_count DESC
+        LIMIT 50
+    </select>
+
+    <update id="increasePlayCount" parameterType="Integer">
+        UPDATE song
+        SET play_count = ( play_count + 1 )
+        WHERE
+	    id = ${songId}
+    </update>
+
+</mapper>

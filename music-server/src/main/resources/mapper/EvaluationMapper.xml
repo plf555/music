@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theVoiceAround.music.mapper.EvaluationMapper">
+    <select id="getSumSocre" resultType="Integer" parameterType="Integer">
+        SELECT COALESCE(SUM(score), 0) score FROM evaluation WHERE song_list_id = ${songListId}
+    </select>
+
+    <select id="getTotalNumOfPeople" resultType="Integer" parameterType="Integer">
+        SELECT COALESCE(COUNT(score), 0) num FROM evaluation WHERE song_list_id = ${songListId}
+    </select>
+
+    <select id="selectAvgScore" resultType="com.theVoiceAround.music.entity.Score">
+        SELECT consumer_id AS consumerId, song_list_id AS songListId, SUM(score)/COUNT(score) AS score
+        FROM evaluation GROUP BY song_list_id
+    </select>
+
+    <select id="selectAllEvaluation" resultType="com.theVoiceAround.music.entity.Score">
+        SELECT consumer_id AS consumerId, song_list_id AS songListId, score FROM evaluation
+    </select>
+
+    <select id="selectHearNoScore" resultType="com.theVoiceAround.music.entity.Score">
+        SELECT
+            M.user_id AS consumerId,
+            M.song_list_id songListId,
+            COUNT(M.song_list_id) AS Score
+        FROM
+            (
+            SELECT
+                X.user_id,
+                X.song_id,
+                Y.song_list_id
+            FROM
+                ( SELECT B.user_id, B.song_id FROM consumer A, play_history B WHERE A.id = B.user_id) AS X
+                JOIN list_song Y ON X.song_id = Y.song_id
+            ) AS M
+            JOIN evaluation N ON M.user_id != N.consumer_id
+            AND M.song_list_id = N.song_list_id
+        GROUP BY M.song_list_id
+    </select>
+
+</mapper>
