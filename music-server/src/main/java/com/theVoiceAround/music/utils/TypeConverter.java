@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Taliy4h
- * @date 2021/3/4 22:10
  * @description 类型转换工具
  */
 public class TypeConverter {

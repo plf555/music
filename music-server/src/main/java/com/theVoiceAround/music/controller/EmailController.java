@@ -16,7 +16,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
+/**
+ * @description 邮件Controller
+ */
 @RestController
 @RequestMapping("/email")
 public class EmailController {

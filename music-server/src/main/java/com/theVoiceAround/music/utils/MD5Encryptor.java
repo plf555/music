@@ -8,8 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author Taliy4h
- * @date 2021/3/5 11:38
  * @description 加密工具
  */
 public class MD5Encryptor {

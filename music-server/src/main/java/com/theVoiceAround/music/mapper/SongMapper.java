@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Taliy4h
- * @date 2021/2/22 17:40
  * @description 歌曲Mapper
  */
 public interface SongMapper extends BaseMapper<Song> {

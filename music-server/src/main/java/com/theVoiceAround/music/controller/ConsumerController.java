@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @description 用户操作Controller
+ */
 
 @RestController
 @RequestMapping("/consumer")

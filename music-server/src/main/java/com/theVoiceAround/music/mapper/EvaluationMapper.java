@@ -7,8 +7,6 @@ import com.theVoiceAround.music.entity.Score;
 import java.util.List;
 
 /**
- * @author Taliy4h
- * @date 2021/3/15 10:11
  * @description 评价Mapper
  */
 public interface EvaluationMapper extends BaseMapper<Evaluation> {

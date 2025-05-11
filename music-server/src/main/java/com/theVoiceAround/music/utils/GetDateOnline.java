@@ -4,8 +4,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
 /**
- * @author Taliy4h
- * @date 2021/3/5 13:02
  * @description 获取在线时间
  */
 public class GetDateOnline {

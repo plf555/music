@@ -1,8 +1,6 @@
 package com.theVoiceAround.music.utils;
 
 /**
- * @author Taliy4h
- * @date 2021/2/1 16:30
  * @description 常量
  */
 public class Consts {

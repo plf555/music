@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Taliy4h
- * @date 2021/2/3 14:34
  * @description 歌手Service实现类
  */
 @Service

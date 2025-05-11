@@ -9,7 +9,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @description
+ * @description评论实体类
  */
 @Data
 @TableName("comment")

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Taliy4h
- * @date 2021/3/15 23:10
  * @description 收藏Service实现类
  */
 @Service
